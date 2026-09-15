@@ -107,3 +107,18 @@ export function geohashPrecisionForRadius(radiusMeters: number): number {
     if (radiusMeters <= 20000) return 4;
     return 3;
 }
+
+/**
+ * Upper bound of the radius bucket a precision was chosen for — the inverse of
+ * geohashPrecisionForRadius. Candidates cached under a cell must cover every
+ * radius that maps to that cell's precision, not just the one that filled it.
+ */
+export function maxRadiusForPrecision(precision: number): number {
+    switch (precision) {
+        case 7: return 150;
+        case 6: return 1200;
+        case 5: return 5000;
+        case 4: return 20000;
+        default: return Infinity;
+    }
+}
